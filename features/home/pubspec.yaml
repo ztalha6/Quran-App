@@ -5,13 +5,15 @@ publish_to: "none"
 homepage:
 
 environment:
-  sdk: '>=2.18.1 <3.0.0'
-  flutter: ">=1.17.0"
+  sdk: ">=3.2.6 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  
+
+  bookmark:
+    path: ../bookmark
+
   # Domain
   quran:
     path: ../../domains/quran
@@ -19,11 +21,11 @@ dependencies:
   # Feature Detail Surah
   detail_surah:
     path: ../detail_surah
-  
+
   # Resources
   resources:
     path: ../../resources/resources
-  
+
   # Shared libraries
   common:
     path: ../../shared_libraries/common

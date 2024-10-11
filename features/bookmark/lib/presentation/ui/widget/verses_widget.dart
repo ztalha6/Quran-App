@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:quran/domain/entities/bookmark_verses_entity.dart';
 import 'package:quran/domain/entities/detail_surah_entity.dart';
 import 'package:quran/domain/entities/surah_entity.dart';
-import 'package:resources/extensions/context_extensions.dart';
 import 'package:resources/styles/color.dart';
 import 'package:resources/styles/text_styles.dart';
 
@@ -137,7 +136,11 @@ class _VersesWidgetState extends State<VersesWidget> {
                           widget.player.play();
                         },
                         borderRadius: BorderRadius.circular(10.0),
-                        child: Image.asset('assets/icon_play.png', width: 16.0),
+                        child: Image.asset(
+                          'assets/icon_play.png',
+                          width: 16.0,
+                          color: kPurplePrimary,
+                        ),
                       );
                     } else if (processingState != ProcessingState.completed) {
                       return InkWell(
@@ -156,7 +159,11 @@ class _VersesWidgetState extends State<VersesWidget> {
                       return InkWell(
                         onTap: () => widget.player.seek(Duration.zero),
                         borderRadius: BorderRadius.circular(10.0),
-                        child: Image.asset('assets/icon_play.png', width: 16.0),
+                        child: Image.asset(
+                          'assets/icon_play.png',
+                          width: 16.0,
+                          color: kPurplePrimary,
+                        ),
                       );
                     }
                   },
@@ -191,13 +198,13 @@ class _VersesWidgetState extends State<VersesWidget> {
                               widget.bookmark.surah,
                             );
 
-                        context.showCustomFlashMessage(
-                          status: 'success',
-                          title: 'Hapus Bookmark Ayat',
-                          darkTheme: widget.prefSetProvider.isDarkTheme,
-                          message:
-                              'Surah ${widget.bookmark.surah} Ayat ${widget.bookmark.inSurah} berhasil dihapus dari Bookmark',
-                        );
+                        // context.showCustomFlashMessage(
+                        //   status: 'success',
+                        //   title: 'Hapus Bookmark Ayat',
+                        //   darkTheme: widget.prefSetProvider.isDarkTheme,
+                        //   message:
+                        //       'Surah ${widget.bookmark.surah} Ayat ${widget.bookmark.inSurah} berhasil dihapus dari Bookmark',
+                        // );
                       } else {
                         await context
                             .read<BookmarkVersesCubit>()
@@ -220,13 +227,13 @@ class _VersesWidgetState extends State<VersesWidget> {
                                   tafsir: null),
                               widget.bookmark.surah,
                             );
-                        context.showCustomFlashMessage(
-                          status: 'success',
-                          title: 'Tambah Bookmark Ayat',
-                          darkTheme: widget.prefSetProvider.isDarkTheme,
-                          message:
-                              'Surah ${widget.bookmark.surah} Ayat ${widget.bookmark.inSurah} berhasil ditambah ke Bookmark',
-                        );
+                        // context.showCustomFlashMessage(
+                        //   status: 'success',
+                        //   title: 'Tambah Bookmark Ayat',
+                        //   darkTheme: widget.prefSetProvider.isDarkTheme,
+                        //   message:
+                        //       'Surah ${widget.bookmark.surah} Ayat ${widget.bookmark.inSurah} berhasil ditambah ke Bookmark',
+                        // );
                       }
 
                       // final message =
@@ -257,7 +264,11 @@ class _VersesWidgetState extends State<VersesWidget> {
                     child: isBookmark
                         ? const Icon(Icons.bookmark_rounded,
                             size: 24.0, color: kPurpleSecondary)
-                        : Image.asset('assets/icon_bookmark.png', width: 16.0),
+                        : Image.asset(
+                            'assets/icon_bookmark.png',
+                            width: 16.0,
+                            color: kPurplePrimary,
+                          ),
                   );
                 }),
                 const SizedBox(width: 6.0),

@@ -55,23 +55,21 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                         ShowUpAnimation(
                           child: Row(
                             children: [
-                              InkWell(
-                                onTap: () => Navigator.pop(context),
-                                child: const Icon(
-                                  Icons.arrow_back,
-                                  size: 24.0,
-                                  color: kGrey,
-                                ),
-                              ),
-                              const SizedBox(width: 18.0),
+                              // InkWell(
+                              //   onTap: () => Navigator.pop(context),
+                              //   child: const Icon(
+                              //     Icons.arrow_back,
+                              //     size: 24.0,
+                              //     color: kGrey,
+                              //   ),
+                              // ),
+                              // const SizedBox(width: 18.0),
                               Text(
                                 'Bookmark Ayat',
                                 style: kHeading6.copyWith(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
-                                  color: prefSetProvider.isDarkTheme
-                                      ? Colors.white
-                                      : kPurpleSecondary,
+                                  color: kPurpleSecondary,
                                 ),
                               ),
                             ],
@@ -86,15 +84,16 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       ShowUpAnimation(
-                                        child: Image.asset(
-                                          'assets/no_data.png',
-                                          width: 80.0,
+                                        child: const Icon(
+                                          Icons.bookmarks_outlined,
+                                          size: 60.0,
+                                          color: kPurplePrimary,
                                         ),
                                       ),
                                       const SizedBox(height: 10.0),
                                       ShowUpAnimation(
                                         child: Text(
-                                          'Bookmark Kosong',
+                                          'No Bookmark',
                                           style: kHeading6.copyWith(
                                             fontSize: 18.0,
                                             color: prefSetProvider.isDarkTheme

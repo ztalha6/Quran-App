@@ -55,7 +55,11 @@ class SurahWidget extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Image.asset('assets/icon_no.png', width: 42.0),
+                  Image.asset(
+                    'assets/icon_no.png',
+                    width: 42.0,
+                    color: kPurplePrimary,
+                  ),
                   Positioned.fill(
                     child: Align(
                       alignment: Alignment.center,
@@ -66,7 +70,7 @@ class SurahWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: prefSetProvider.isDarkTheme
                               ? Colors.white
-                              : kDarkPurple,
+                              : Colors.black,
                         ),
                       ),
                     ),
@@ -83,7 +87,7 @@ class SurahWidget extends StatelessWidget {
                       fontSize: 16.0,
                       color: prefSetProvider.isDarkTheme
                           ? Colors.white
-                          : kDarkPurple,
+                          : Colors.black,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w600,
                     ),
@@ -123,9 +127,7 @@ class SurahWidget extends StatelessWidget {
                 style: kHeading6.copyWith(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
-                  color: prefSetProvider.isDarkTheme
-                      ? kPurplePrimary
-                      : kDarkPurple,
+                  color: kPurplePrimary,
                 ),
               ),
             ],

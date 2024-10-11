@@ -100,12 +100,13 @@ class BannerLastReadWidget extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: -30.0,
-          right: -36.0,
+          bottom: -40.0,
+          right: -46.0,
           child: ShowUpAnimation(
             child: Image.asset(
               'assets/quran.png',
               width: 220,
+              scale: 4,
             ),
           ),
         ),

@@ -19,7 +19,7 @@ class OnBoardScreen extends StatelessWidget {
             children: [
               ShowUpAnimation(
                 child: Text(
-                  'Quran App',
+                  'Bayan ul Furqan',
                   style: kHeading6.copyWith(
                     fontSize: 28.0,
                     fontWeight: FontWeight.w700,
@@ -29,7 +29,7 @@ class OnBoardScreen extends StatelessWidget {
               const SizedBox(height: 16.0),
               ShowUpAnimation(
                 child: Text(
-                  'Pelajari Quran dan\nBacalah sekali setiap hari',
+                  'Learn Quran and Recite once everyday With Kashmiri Translation',
                   textAlign: TextAlign.center,
                   style: kHeading6.copyWith(
                     fontSize: 18.0,
@@ -68,13 +68,13 @@ class OnBoardScreen extends StatelessWidget {
                             vertical: 18.0,
                           ),
                           decoration: BoxDecoration(
-                            color: kMikadoYellow,
-                            borderRadius: BorderRadius.circular(30.0),
+                            color: kPurplePrimary,
+                            borderRadius: BorderRadius.circular(18.0),
                           ),
                           child: Consumer<PreferenceSettingsProvider>(
                             builder: (context, prefSetProvider, _) {
                               return Text(
-                                ' Mulai Yuk! ',
+                                ' Get Started! ',
                                 style: kHeading6.copyWith(
                                     color: prefSetProvider.isDarkTheme
                                         ? kBlackPurple
