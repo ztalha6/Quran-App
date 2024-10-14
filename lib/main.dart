@@ -12,6 +12,7 @@ import 'package:detail_surah/presentation/bloc/bloc.dart';
 import 'package:detail_surah/presentation/cubits/bookmark_verses/bookmark_verses_cubit.dart';
 import 'package:detail_surah/presentation/cubits/last_read/last_read_cubit.dart';
 import 'package:detail_surah/presentation/ui/detail_surah_screen.dart';
+import 'package:duas/presentation/bloc/duas_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:home/presentation/bloc/home_bloc.dart';
 import 'package:home/presentation/ui/home_screen.dart';
@@ -68,6 +69,21 @@ class MyApp extends StatelessWidget {
                           updateLastReadUsecase: sl(),
                         ),
                       ),
+                      BlocProvider(
+                        create: (_) => BookmarkBloc(
+                          getBookmarkVersesUsecase: sl(),
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (context) => BookmarkVersesCubit(
+                          removeBookmarkVersesUsecase: sl(),
+                          saveBookmarkVersesUseCase: sl(),
+                          statusBookmarkVerseUsecase: sl(),
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (context) => DuasBloc(),
+                      )
                     ],
                     child: const HomeScreen(),
                   ),

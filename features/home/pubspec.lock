@@ -116,6 +116,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.6"
+  duas:
+    dependency: "direct main"
+    description:
+      path: "../duas"
+      relative: true
+    source: path
+    version: "0.0.1"
   equatable:
     dependency: transitive
     description:
@@ -607,5 +614,5 @@ packages:
     source: hosted
     version: "1.0.4"
 sdks:
-  dart: ">=3.5.0 <4.0.0"
+  dart: ">=3.5.2 <4.0.0"
   flutter: ">=3.22.0"

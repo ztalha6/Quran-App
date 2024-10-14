@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const Color kPurplePrimary = Color(0xFFAE914F); //#863ED5
 const Color kPurpleSecondary = Color(0xFFAE914F); //#672CBC
 const Color kDarkPurple = Color.fromARGB(255, 90, 64, 5); //#3B1E77
-const Color kBlackPurple = Color.fromRGBO(36, 15, 79, 1.0); //#240F4F
+const Color kBlackPurple = Color(0xFF252525); //#240F4F
 const Color kGrey = Color.fromRGBO(135, 137, 163, 1.0); //#8789A3
 const Color kGrey92 = Color.fromRGBO(235, 235, 235, 1.0); //#ebebeb
 const Color kGreyLight = Color.fromRGBO(171, 175, 215, 1.0); //#abafd7

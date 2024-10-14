@@ -22,6 +22,8 @@ dependencies:
     path: features/detail_surah
   bookmark:
     path: features/bookmark
+  duas:
+    path: features/duas
 
   # Domains
   quran:
