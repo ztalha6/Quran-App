@@ -7,6 +7,7 @@ import 'package:dependencies/provider/provider.dart';
 import 'package:dependencies/show_up_animation/show_up_animation.dart';
 import 'package:detail_surah/presentation/cubits/last_read/last_read_cubit.dart';
 import 'package:duas/presentation/ui/duas_screen.dart';
+import 'package:duas/presentation/ui/prayers_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:home/presentation/bloc/bloc.dart';
 import 'package:home/presentation/ui/widget/banner_last_read_widget.dart';
@@ -55,178 +56,182 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
     return Consumer<PreferenceSettingsProvider>(
       builder: (context, prefSetProvider, _) {
         return Scaffold(
-            body: currentIndex == 2
-                ? const DuaScreen()
-                : currentIndex == 3
-                    ? const BookmarkScreen()
-                    : SafeArea(
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 32.0, horizontal: 28.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ShowUpAnimation(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        prefSetProvider.isDarkTheme
-                                            ? 'assets/icon_quran_white.png'
-                                            : 'assets/icon_quran.png',
-                                        width: 28.0,
-                                        color: kPurplePrimary,
+            body: currentIndex == 1
+                ? const PrayersScreen()
+                : currentIndex == 2
+                    ? const DuaScreen()
+                    : currentIndex == 3
+                        ? const BookmarkScreen()
+                        : SafeArea(
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 32.0, horizontal: 28.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ShowUpAnimation(
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Image.asset(
+                                            prefSetProvider.isDarkTheme
+                                                ? 'assets/icon_quran_white.png'
+                                                : 'assets/icon_quran.png',
+                                            width: 28.0,
+                                            color: kPurplePrimary,
+                                          ),
+                                          const SizedBox(width: 6.0),
+                                          Text(
+                                            'Bayan ul Furqan',
+                                            style: kHeading6.copyWith(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          // InkWell(
+                                          //   onTap: () => Navigator.pushNamed(
+                                          //       context, NamedRoutes.bookmarkScreen),
+                                          //   child: Image.asset(
+                                          //     prefSetProvider.isDarkTheme
+                                          //         ? 'assets/icon_bookmark_white.png'
+                                          //         : 'assets/icon_bookmark.png',
+                                          //     width: 16.0,
+                                          //   ),
+                                          // ),
+                                          // const SizedBox(width: 8.0),
+                                          InkWell(
+                                            onTap: () =>
+                                                prefSetProvider.enableDarkTheme(
+                                                    !prefSetProvider
+                                                        .isDarkTheme),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            child: Icon(
+                                              prefSetProvider.isDarkTheme
+                                                  ? Icons.light_mode_sharp
+                                                  : Icons.dark_mode_sharp,
+                                              size: 24.0,
+                                              color: prefSetProvider.isDarkTheme
+                                                  ? Colors.white
+                                                  : kPurplePrimary,
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      const SizedBox(width: 6.0),
-                                      Text(
-                                        'Bayan ul Furqan',
-                                        style: kHeading6.copyWith(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      // InkWell(
-                                      //   onTap: () => Navigator.pushNamed(
-                                      //       context, NamedRoutes.bookmarkScreen),
-                                      //   child: Image.asset(
-                                      //     prefSetProvider.isDarkTheme
-                                      //         ? 'assets/icon_bookmark_white.png'
-                                      //         : 'assets/icon_bookmark.png',
-                                      //     width: 16.0,
-                                      //   ),
-                                      // ),
-                                      // const SizedBox(width: 8.0),
-                                      InkWell(
-                                        onTap: () =>
-                                            prefSetProvider.enableDarkTheme(
-                                                !prefSetProvider.isDarkTheme),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        child: Icon(
-                                          prefSetProvider.isDarkTheme
-                                              ? Icons.light_mode_sharp
-                                              : Icons.dark_mode_sharp,
-                                          size: 24.0,
-                                          color: prefSetProvider.isDarkTheme
-                                              ? Colors.white
-                                              : kPurplePrimary,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 28.0),
-                                ShowUpAnimation(
-                                  child: Text(
-                                    "Assalamu'alaikum",
-                                    style: kHeading6.copyWith(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: prefSetProvider.isDarkTheme
-                                          ? kGrey.withOpacity(0.9)
-                                          : kGrey.withOpacity(0.7),
-                                      letterSpacing: 0.0,
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(height: 2.0),
-                                ShowUpAnimation(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Ahlan Wa Sahlan',
+                                    const SizedBox(height: 28.0),
+                                    ShowUpAnimation(
+                                      child: Text(
+                                        "Assalamu'alaikum",
                                         style: kHeading6.copyWith(
-                                          fontSize: 24.0,
-                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w500,
                                           color: prefSetProvider.isDarkTheme
-                                              ? Colors.white
-                                              : kBlackPurple,
+                                              ? kGrey.withOpacity(0.9)
+                                              : kGrey.withOpacity(0.7),
                                           letterSpacing: 0.0,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 22.0),
-                                const BannerLastReadWidget(),
-                                const SizedBox(height: 24.0),
-                                ShowUpAnimation(
-                                  child: Text(
-                                    'Surah',
-                                    style: kHeading6.copyWith(
-                                      fontSize: 18.0,
-                                      color: prefSetProvider.isDarkTheme
-                                          ? Colors.white
-                                          : kPurplePrimary,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
                                     ),
-                                  ),
-                                ),
-                                ShowUpAnimation(
-                                  child: SizedBox(
-                                    width: 40,
-                                    child: Divider(
-                                      thickness: 2,
-                                      color: prefSetProvider.isDarkTheme
-                                          ? kPurplePrimary
-                                          : kPurplePrimary,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 12.0),
-                                BlocBuilder<HomeBloc, HomeState>(
-                                  builder: (context, state) {
-                                    final status = state.statusSurah.status;
-
-                                    if (status.isLoading) {
-                                      return Center(
-                                          child: CircularProgressIndicator(
-                                        color: prefSetProvider.isDarkTheme
-                                            ? Colors.white
-                                            : kPurplePrimary,
-                                      ));
-                                    } else if (status.isNoData) {
-                                      return Center(
-                                          child:
-                                              Text(state.statusSurah.message));
-                                    } else if (status.isError) {
-                                      return Center(
-                                          child:
-                                              Text(state.statusSurah.message));
-                                    } else if (status.isHasData) {
-                                      final surah =
-                                          state.statusSurah.data ?? [];
-                                      return ShowUpAnimation(
-                                        child: SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              2.1,
-                                          child: ListSurahWidget(
-                                            surah: surah,
-                                            prefSetProvider: prefSetProvider,
+                                    const SizedBox(height: 2.0),
+                                    ShowUpAnimation(
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Ahlan Wa Sahlan',
+                                            style: kHeading6.copyWith(
+                                              fontSize: 24.0,
+                                              fontWeight: FontWeight.w700,
+                                              color: prefSetProvider.isDarkTheme
+                                                  ? Colors.white
+                                                  : kBlackPurple,
+                                              letterSpacing: 0.0,
+                                            ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 22.0),
+                                    const BannerLastReadWidget(),
+                                    const SizedBox(height: 24.0),
+                                    ShowUpAnimation(
+                                      child: Text(
+                                        'Surah',
+                                        style: kHeading6.copyWith(
+                                          fontSize: 18.0,
+                                          color: prefSetProvider.isDarkTheme
+                                              ? Colors.white
+                                              : kPurplePrimary,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                      );
-                                    } else {
-                                      return const Center(
-                                          child: Text('Error BLoC'));
-                                    }
-                                  },
+                                      ),
+                                    ),
+                                    ShowUpAnimation(
+                                      child: SizedBox(
+                                        width: 40,
+                                        child: Divider(
+                                          thickness: 2,
+                                          color: prefSetProvider.isDarkTheme
+                                              ? kPurplePrimary
+                                              : kPurplePrimary,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12.0),
+                                    BlocBuilder<HomeBloc, HomeState>(
+                                      builder: (context, state) {
+                                        final status = state.statusSurah.status;
+
+                                        if (status.isLoading) {
+                                          return Center(
+                                              child: CircularProgressIndicator(
+                                            color: prefSetProvider.isDarkTheme
+                                                ? Colors.white
+                                                : kPurplePrimary,
+                                          ));
+                                        } else if (status.isNoData) {
+                                          return Center(
+                                              child: Text(
+                                                  state.statusSurah.message));
+                                        } else if (status.isError) {
+                                          return Center(
+                                              child: Text(
+                                                  state.statusSurah.message));
+                                        } else if (status.isHasData) {
+                                          final surah =
+                                              state.statusSurah.data ?? [];
+                                          return ShowUpAnimation(
+                                            child: SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  2.1,
+                                              child: ListSurahWidget(
+                                                surah: surah,
+                                                prefSetProvider:
+                                                    prefSetProvider,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          return const Center(
+                                              child: Text('Error BLoC'));
+                                        }
+                                      },
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
             bottomNavigationBar: Container(
               decoration: BoxDecoration(
                 boxShadow: <BoxShadow>[

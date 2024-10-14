@@ -2,8 +2,6 @@ import 'package:common/utils/navigation/navigation.dart';
 import 'package:dependencies/show_up_animation/show_up_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/constant/named_routes.dart';
-import 'package:resources/styles/color.dart';
-import 'package:resources/styles/text_styles.dart';
 
 class SplashScreen extends StatelessWidget {
   final duration = const Duration(seconds: 3);
