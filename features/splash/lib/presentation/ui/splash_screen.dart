@@ -69,7 +69,7 @@ class SplashScreen extends StatelessWidget {
               delayStart: const Duration(seconds: 1),
               child: Image.asset(
                 'assets/logo_splash_image.png',
-                scale: 4,
+                scale: 3,
               ),
             ),
           ],

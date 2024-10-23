@@ -65,11 +65,11 @@ class DuaDetailScreen extends StatelessWidget {
                     content,
                     textAlign: TextAlign.right,
                     style: kHeading6.copyWith(
-                      fontSize: 28.0,
+                      fontSize: 24.0,
                       fontWeight: FontWeight.w500,
                       color: prefSetProvider.isDarkTheme
                           ? Colors.white
-                          : kDarkPurple,
+                          : const Color(0xFF252525),
                     ),
                   ),
                 ],

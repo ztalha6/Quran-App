@@ -30,6 +30,7 @@ class VersesWidget extends StatefulWidget {
 
 class _VersesWidgetState extends State<VersesWidget> {
   bool isBookmark = false;
+  bool ayatPlaying = false;
 
   @override
   void initState() {
@@ -96,7 +97,7 @@ class _VersesWidgetState extends State<VersesWidget> {
                   height: 35.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100.0),
-                    color: kPurplePrimary,
+                    color: ayatPlaying ? kPurplePrimary : Colors.black,
                   ),
                   child: Center(
                     child: Text(
@@ -126,7 +127,9 @@ class _VersesWidgetState extends State<VersesWidget> {
                           strokeWidth: 3.0,
                           color: widget.prefSetProvider.isDarkTheme
                               ? Colors.white
-                              : kPurplePrimary,
+                              : ayatPlaying
+                                  ? kPurplePrimary
+                                  : Colors.black,
                         ),
                       );
                     } else if (playing != true) {
@@ -134,35 +137,42 @@ class _VersesWidgetState extends State<VersesWidget> {
                         onTap: () async {
                           setAudioUrl();
                           widget.player.play();
+                          ayatPlaying = true;
+                          setState(() {});
                         },
                         borderRadius: BorderRadius.circular(10.0),
                         child: Image.asset(
                           'assets/icon_play.png',
-                          color: kPurplePrimary,
+                          color: ayatPlaying ? kPurplePrimary : Colors.black,
                           width: 16.0,
                         ),
                       );
                     } else if (processingState != ProcessingState.completed) {
                       return InkWell(
                         onTap: () {
+                          ayatPlaying = false;
+                          setState(() {});
                           widget.player.stop();
                           widget.player.seek(Duration.zero);
                         },
                         borderRadius: BorderRadius.circular(10.0),
-                        child: const Icon(
+                        child: Icon(
                           Icons.pause,
                           size: 24.0,
-                          color: kPurplePrimary,
+                          color: ayatPlaying ? kPurplePrimary : Colors.black,
                         ),
                       );
                     } else {
+                      ayatPlaying = false;
                       return InkWell(
-                        onTap: () => widget.player.seek(Duration.zero),
+                        onTap: () {
+                          widget.player.seek(Duration.zero);
+                        },
                         borderRadius: BorderRadius.circular(10.0),
                         child: Image.asset(
                           'assets/icon_play.png',
                           width: 16.0,
-                          color: kPurplePrimary,
+                          color: ayatPlaying ? kPurplePrimary : Colors.black,
                         ),
                       );
                     }
@@ -211,7 +221,7 @@ class _VersesWidgetState extends State<VersesWidget> {
                         : Image.asset(
                             'assets/icon_bookmark.png',
                             width: 16.0,
-                            color: kPurplePrimary,
+                            color: ayatPlaying ? kPurplePrimary : Colors.black,
                           ),
                   );
                 }),
@@ -230,7 +240,9 @@ class _VersesWidgetState extends State<VersesWidget> {
                 fontWeight: FontWeight.w500,
                 color: widget.prefSetProvider.isDarkTheme
                     ? Colors.white
-                    : kDarkPurple,
+                    : ayatPlaying
+                        ? kPurplePrimary
+                        : Colors.black,
               ),
             ),
           ),
@@ -239,9 +251,10 @@ class _VersesWidgetState extends State<VersesWidget> {
             widget.verses.text.transliteration.en,
             style: kHeading6.copyWith(
               fontSize: 12.0,
-              fontWeight: FontWeight.w400,
-              color:
-                  widget.prefSetProvider.isDarkTheme ? kGreyLight : kDarkPurple,
+              fontWeight: FontWeight.w800,
+              color: widget.prefSetProvider.isDarkTheme
+                  ? kGreyLight
+                  : Color(0xFF8789A3),
               fontStyle: FontStyle.italic,
             ),
           ),
@@ -252,7 +265,7 @@ class _VersesWidgetState extends State<VersesWidget> {
               fontWeight: FontWeight.w400,
               color: widget.prefSetProvider.isDarkTheme
                   ? kGreyLight
-                  : kDarkPurple.withOpacity(0.7),
+                  : const Color(0xFF8789A3),
             ),
           ),
         ],

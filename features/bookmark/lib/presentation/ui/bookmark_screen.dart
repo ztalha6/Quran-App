@@ -98,7 +98,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                                             fontSize: 18.0,
                                             color: prefSetProvider.isDarkTheme
                                                 ? kLinearPurple1
-                                                : kPurplePrimary,
+                                                : const Color(0xFF252525),
                                             letterSpacing: 0,
                                           ),
                                         ),
