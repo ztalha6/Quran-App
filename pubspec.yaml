@@ -8,44 +8,34 @@ environment:
   sdk: ">=3.2.6 <4.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-
-  cupertino_icons: ^1.0.2
-
-  # Features
-  home:
-    path: features/home
-  splash:
-    path: features/splash
-  detail_surah:
-    path: features/detail_surah
   bookmark:
     path: features/bookmark
-  duas:
-    path: features/duas
-
-  # Domains
-  quran:
-    path: domains/quran
-
-  # Resources
-  resources:
-    path: resources/resources
-
-  # Shared Libraries
   common:
     path: shared_libraries/common
   core:
     path: shared_libraries/core
+  cupertino_icons: ^1.0.2
   dependencies:
     path: shared_libraries/dependencies
+  detail_surah:
+    path: features/detail_surah
+  duas:
+    path: features/duas
+  flutter:
+    sdk: flutter
+  home:
+    path: features/home
+  quran:
+    path: domains/quran
+  resources:
+    path: resources/resources
+  splash:
+    path: features/splash
 
 dev_dependencies:
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true

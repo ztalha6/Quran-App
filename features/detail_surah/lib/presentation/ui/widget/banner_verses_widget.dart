@@ -23,7 +23,7 @@ class BannerVersesWidget extends StatelessWidget {
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(
-              vertical: 30.0,
+              vertical: 20.0,
               horizontal: 64.0,
             ),
             decoration: BoxDecoration(
@@ -55,15 +55,15 @@ class BannerVersesWidget extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: 4.0),
-                Text(
-                  surah.name.translation.id,
-                  style: kHeading6.copyWith(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                // const SizedBox(height: 4.0),
+                // Text(
+                //   surah.name.translation.id,
+                //   style: kHeading6.copyWith(
+                //     fontSize: 16.0,
+                //     color: Colors.white,
+                //     fontWeight: FontWeight.w500,
+                //   ),
+                // ),
                 const SizedBox(height: 10.0),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 14.0),
