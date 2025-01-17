@@ -87,7 +87,7 @@ class _VersesWidgetState extends State<VersesWidget> {
             padding:
                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 13.0),
             decoration: BoxDecoration(
-              color: kPurplePrimary.withOpacity(0.065),
+              color: Color(0xFF121931).withOpacity(0.065),
               borderRadius: BorderRadius.circular(14.0),
             ),
             child: Row(
