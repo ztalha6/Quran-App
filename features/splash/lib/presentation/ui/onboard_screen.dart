@@ -38,7 +38,7 @@ class OnBoardScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 40.0),
+              const SizedBox(height: 5.0),
               Stack(
                 alignment: Alignment.center,
                 children: [
@@ -47,6 +47,7 @@ class OnBoardScreen extends StatelessWidget {
                       ShowUpAnimation(
                         child: Image.asset(
                           'assets/quran_onboard.png',
+                          scale: 4.4,
                         ),
                       ),
                       const SizedBox(
