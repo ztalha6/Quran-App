@@ -15,6 +15,7 @@ class VersesWidget extends StatefulWidget {
   final VerseEntity verses;
   final PreferenceSettingsProvider prefSetProvider;
   final String surah;
+  final String kashmiriTranslation;
   final AudioPlayer player = AudioPlayer();
 
   VersesWidget({
@@ -22,6 +23,7 @@ class VersesWidget extends StatefulWidget {
     required this.verses,
     required this.prefSetProvider,
     required this.surah,
+    required this.kashmiriTranslation,
   });
 
   @override
@@ -248,7 +250,18 @@ class _VersesWidgetState extends State<VersesWidget> {
           ),
           const SizedBox(height: 18.0),
           Text(
-            widget.verses.text.transliteration.en,
+            widget.verses.translation.en,
+            style: kHeading6.copyWith(
+              fontSize: 12.0,
+              fontWeight: FontWeight.w800,
+              color: widget.prefSetProvider.isDarkTheme
+                  ? kGreyLight
+                  : Color(0xFF8789A3),
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+          Text(
+            widget.kashmiriTranslation,
             style: kHeading6.copyWith(
               fontSize: 12.0,
               fontWeight: FontWeight.w800,

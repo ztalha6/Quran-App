@@ -112,7 +112,12 @@ class MyApp extends StatelessWidget {
                       ),
                     ],
                     child: DetailSurahScreen(
-                        id: ModalRoute.of(context)?.settings.arguments as int),
+                      id: (ModalRoute.of(context)?.settings.arguments
+                          as Map)['surah'] as int,
+                      kashmiriTranslationFilePath: (ModalRoute.of(context)
+                          ?.settings
+                          .arguments as Map)['path'] as String,
+                    ),
                   ),
               NamedRoutes.bookmarkScreen: (context) => MultiBlocProvider(
                     providers: [

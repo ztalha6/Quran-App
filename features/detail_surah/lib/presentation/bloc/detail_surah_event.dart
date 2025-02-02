@@ -7,9 +7,20 @@ class DetailSurahEvent extends Equatable {
 
 class FetchDetailSurah extends DetailSurahEvent {
   final int id;
+  final String kashmiriTranslationFilePath;
 
-  FetchDetailSurah({required this.id});
+  FetchDetailSurah(
+      {required this.id, required this.kashmiriTranslationFilePath});
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, kashmiriTranslationFilePath];
+}
+
+class FetchKashmiriTranslation extends DetailSurahEvent {
+  final String filePath;
+
+  FetchKashmiriTranslation({required this.filePath});
+
+  @override
+  List<Object?> get props => [filePath];
 }

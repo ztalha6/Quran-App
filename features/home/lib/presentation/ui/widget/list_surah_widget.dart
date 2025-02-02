@@ -23,8 +23,14 @@ class ListSurahWidget extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (_, index) {
         return InkWell(
-          onTap: () => Navigator.pushNamed(context, NamedRoutes.detailScreen,
-              arguments: surah[index].number),
+          onTap: () => Navigator.pushNamed(
+            context,
+            NamedRoutes.detailScreen,
+            arguments: {
+              'surah': surah[index].number,
+              'path': 'assets/surahs/surah_fatiah.json',
+            },
+          ),
           child: SurahWidget(
             surah: surah[index],
             prefSetProvider: prefSetProvider,

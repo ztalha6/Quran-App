@@ -13,8 +13,10 @@ import 'package:resources/styles/text_styles.dart';
 
 class DetailSurahScreen extends StatefulWidget {
   final int id;
+  final String kashmiriTranslationFilePath;
 
-  const DetailSurahScreen({super.key, required this.id});
+  const DetailSurahScreen(
+      {super.key, required this.id, required this.kashmiriTranslationFilePath});
 
   @override
   State<DetailSurahScreen> createState() => _DetailSurahScreenState();
@@ -26,7 +28,11 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
     super.initState();
 
     Future.microtask(() {
-      context.read<DetailSurahBloc>().add(FetchDetailSurah(id: widget.id));
+      context.read<DetailSurahBloc>().add(FetchDetailSurah(
+          id: widget.id,
+          kashmiriTranslationFilePath: widget.kashmiriTranslationFilePath));
+      context.read<DetailSurahBloc>().add(FetchKashmiriTranslation(
+          filePath: widget.kashmiriTranslationFilePath));
       context.read<LastReadCubit>().getLastRead();
     });
   }
@@ -52,12 +58,11 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                             : kPurplePrimary,
                       ),
                     );
-                  } else if (status.isNoData) {
-                    return Center(child: Text(state.statusDetailSurah.message));
-                  } else if (status.isError) {
+                  } else if (status.isNoData || status.isError) {
                     return Center(child: Text(state.statusDetailSurah.message));
                   } else if (status.isHasData) {
                     final surah = state.statusDetailSurah.data;
+                    final translations = state.kashmiriTranslations;
 
                     if (context.read<LastReadCubit>().state.data.isEmpty) {
                       context.read<LastReadCubit>().addLastRead(surah!);
@@ -117,6 +122,10 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                                               prefSetProvider: prefSetProvider,
                                               surah:
                                                   surah.name.transliteration.id,
+                                              kashmiriTranslation: translations[
+                                                      surah.verses[index].number
+                                                          .inSurah] ??
+                                                  "",
                                             );
                                           },
                                         ),
