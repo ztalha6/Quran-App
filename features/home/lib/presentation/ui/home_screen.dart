@@ -12,8 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:home/presentation/bloc/bloc.dart';
 import 'package:home/presentation/ui/widget/banner_last_read_widget.dart';
 import 'package:home/presentation/ui/widget/list_surah_widget.dart';
+import 'package:home/presentation/ui/widget/qibla_direction_page.dart';
 import 'package:resources/styles/color.dart';
 import 'package:resources/styles/text_styles.dart';
+
+import 'widget/follow_us_bottomsheet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,6 +59,14 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
     return Consumer<PreferenceSettingsProvider>(
       builder: (context, prefSetProvider, _) {
         return Scaffold(
+            floatingActionButton: InkWell(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const QiblaDirectionPage())),
+              child: Image.asset(
+                'assets/direction_icon.png',
+                scale: 2.5,
+              ),
+            ),
             body: currentIndex == 1
                 ? const PrayersScreen()
                 : currentIndex == 2
@@ -94,8 +105,8 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                                           ),
                                           const Spacer(),
                                           // InkWell(
-                                          //   onTap: () => Navigator.pushNamed(
-                                          //       context, NamedRoutes.bookmarkScreen),
+                                          // onTap: () => Navigator.pushNamed(
+                                          //     context, NamedRoutes.bookmarkScreen),
                                           //   child: Image.asset(
                                           //     prefSetProvider.isDarkTheme
                                           //         ? 'assets/icon_bookmark_white.png'
@@ -106,15 +117,12 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                                           // const SizedBox(width: 8.0),
                                           InkWell(
                                             onTap: () =>
-                                                prefSetProvider.enableDarkTheme(
-                                                    !prefSetProvider
-                                                        .isDarkTheme),
+                                                showFollowUsBottomSheet(
+                                                    context),
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
                                             child: Icon(
-                                              prefSetProvider.isDarkTheme
-                                                  ? Icons.light_mode_sharp
-                                                  : Icons.dark_mode_sharp,
+                                              Icons.chat_outlined,
                                               size: 24.0,
                                               color: prefSetProvider.isDarkTheme
                                                   ? Colors.white
@@ -280,6 +288,17 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 ),
               ),
             ));
+      },
+    );
+  }
+
+  void showFollowUsBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) {
+        return const FollowUsBottomSheet();
       },
     );
   }

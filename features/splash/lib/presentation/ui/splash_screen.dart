@@ -2,6 +2,7 @@ import 'package:common/utils/navigation/navigation.dart';
 import 'package:dependencies/show_up_animation/show_up_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/constant/named_routes.dart';
+import 'package:resources/styles/color.dart';
 
 class SplashScreen extends StatelessWidget {
   final duration = const Duration(seconds: 3);
@@ -23,7 +24,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kPurplePrimary,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

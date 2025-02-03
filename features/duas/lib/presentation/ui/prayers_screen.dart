@@ -212,6 +212,7 @@ class PrayerWidget extends StatelessWidget {
               Image.asset(
                 dua.assetImage,
                 scale: 2.3,
+                color: kPurplePrimary,
               ),
               const SizedBox(width: 20),
               Text(

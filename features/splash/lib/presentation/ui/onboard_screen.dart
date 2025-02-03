@@ -72,8 +72,8 @@ class OnBoardScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18.0),
                           gradient: const LinearGradient(
                             colors: [
-                              Color(0xFFF0D390),
-                              Color(0xFFAE914F),
+                              kLinearPurple1,
+                              kLinearPurple2,
                             ],
                             begin: FractionalOffset(0.0, 1.0),
                             end: FractionalOffset(1.0, 0.0),
