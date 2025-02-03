@@ -4,14 +4,23 @@ import 'package:quran/domain/entities/detail_surah_entity.dart';
 
 class DetailSurahState extends Equatable {
   final ViewData<DetailSurahEntity> statusDetailSurah;
+  final Map<int, String> kashmiriTranslations;
 
-  const DetailSurahState({required this.statusDetailSurah});
+  const DetailSurahState({
+    required this.statusDetailSurah,
+    required this.kashmiriTranslations,
+  });
 
-  DetailSurahState copyWith({ViewData<DetailSurahEntity>? statusDetailSurah}) {
+  DetailSurahState copyWith({
+    ViewData<DetailSurahEntity>? statusDetailSurah,
+    Map<int, String>? kashmiriTranslations,
+  }) {
     return DetailSurahState(
-        statusDetailSurah: statusDetailSurah ?? this.statusDetailSurah);
+      statusDetailSurah: statusDetailSurah ?? this.statusDetailSurah,
+      kashmiriTranslations: kashmiriTranslations ?? this.kashmiriTranslations,
+    );
   }
 
   @override
-  List<Object?> get props => [statusDetailSurah];
+  List<Object?> get props => [statusDetailSurah, kashmiriTranslations];
 }
