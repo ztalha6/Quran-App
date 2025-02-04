@@ -105,7 +105,7 @@ class _PrayersScreenState extends State<PrayersScreen> {
                             const BorderRadius.all(Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFAE914F).withOpacity(0.5),
+                            color: kPurplePrimary.withOpacity(0.5),
                             spreadRadius: 2,
                             blurRadius: 50,
                             offset: const Offset(
