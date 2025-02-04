@@ -127,7 +127,7 @@ class _PrayersScreenState extends State<PrayersScreen> {
                                     fontSize: 16.0,
                                     color: prefSetProvider.isDarkTheme
                                         ? Colors.white
-                                        : Colors.black,
+                                        : Colors.white,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),

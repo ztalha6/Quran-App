@@ -32,7 +32,7 @@ class _QiblaDirectionPageState extends State<QiblaDirectionPage> {
       backgroundColor: kPurplePrimary,
       appBar: AppBar(
         title: const Text(
-          'Qibla Finder App',
+          'Qibla Finder',
           style: TextStyle(
             color: Colors.white,
           ),
