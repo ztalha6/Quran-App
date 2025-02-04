@@ -16,6 +16,7 @@ class VersesWidget extends StatefulWidget {
   final PreferenceSettingsProvider prefSetProvider;
   final String surah;
   final String kashmiriTranslation;
+  final String urduTranslation;
   final AudioPlayer player = AudioPlayer();
 
   VersesWidget({
@@ -24,6 +25,7 @@ class VersesWidget extends StatefulWidget {
     required this.prefSetProvider,
     required this.surah,
     required this.kashmiriTranslation,
+    required this.urduTranslation,
   });
 
   @override
@@ -89,7 +91,7 @@ class _VersesWidgetState extends State<VersesWidget> {
             padding:
                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 13.0),
             decoration: BoxDecoration(
-              color: Color(0xFF121931).withOpacity(0.065),
+              color: const Color(0xFF121931).withOpacity(0.065),
               borderRadius: BorderRadius.circular(14.0),
             ),
             child: Row(
@@ -256,7 +258,7 @@ class _VersesWidgetState extends State<VersesWidget> {
               fontWeight: FontWeight.w800,
               color: widget.prefSetProvider.isDarkTheme
                   ? kGreyLight
-                  : Color(0xFF8789A3),
+                  : const Color(0xFF8789A3),
               fontStyle: FontStyle.italic,
             ),
           ),
@@ -267,18 +269,19 @@ class _VersesWidgetState extends State<VersesWidget> {
               fontWeight: FontWeight.w800,
               color: widget.prefSetProvider.isDarkTheme
                   ? kGreyLight
-                  : Color(0xFF8789A3),
+                  : const Color(0xFF8789A3),
               fontStyle: FontStyle.italic,
             ),
           ),
           Text(
-            widget.verses.translation.id,
+            widget.urduTranslation,
             style: kHeading6.copyWith(
               fontSize: 12.0,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w800,
               color: widget.prefSetProvider.isDarkTheme
                   ? kGreyLight
                   : const Color(0xFF8789A3),
+              fontStyle: FontStyle.italic,
             ),
           ),
         ],

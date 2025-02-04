@@ -29,6 +29,8 @@ class ListSurahWidget extends StatelessWidget {
             arguments: {
               'surah': surah[index].number,
               'path': 'assets/surahs/surah_fatiah.json',
+              'urduPath':
+                  'assets/urdu_translations/t_surah_${surah[index].number}.json',
             },
           ),
           child: SurahWidget(

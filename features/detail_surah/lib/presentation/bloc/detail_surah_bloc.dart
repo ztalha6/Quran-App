@@ -12,9 +12,11 @@ class DetailSurahBloc extends Bloc<DetailSurahEvent, DetailSurahState> {
   DetailSurahBloc({required this.getDetailSurahUsecase})
       : super(DetailSurahState(
             statusDetailSurah: ViewData.initial(),
-            kashmiriTranslations: const {})) {
+            kashmiriTranslations: const {},
+            urduTranslations: const {})) {
     on<FetchDetailSurah>(_detailSurahEvent);
     on<FetchKashmiriTranslation>(_fetchKashmiriTranslation);
+    on<FetchUrduTranslation>(_fetchUrduTranslation);
   }
 
   void _detailSurahEvent(FetchDetailSurah event, Emitter emit) async {
@@ -34,9 +36,10 @@ class DetailSurahBloc extends Bloc<DetailSurahEvent, DetailSurahState> {
             (data) {
           emit(state.copyWith(statusDetailSurah: ViewData.loaded(data: data)));
 
-          // Trigger fetching Kashmiri translation
+          // Trigger fetching translation
           add(FetchKashmiriTranslation(
               filePath: event.kashmiriTranslationFilePath));
+          add(FetchUrduTranslation(filePath: event.urduTranslationFilePath));
         });
       }
     } catch (e) {
@@ -64,6 +67,28 @@ class DetailSurahBloc extends Bloc<DetailSurahEvent, DetailSurahState> {
       emit(state.copyWith(kashmiriTranslations: translations));
     } catch (e) {
       emit(state.copyWith(kashmiriTranslations: {}));
+    }
+  }
+
+  void _fetchUrduTranslation(FetchUrduTranslation event, Emitter emit) async {
+    try {
+      final String jsonString = await rootBundle.loadString(event.filePath);
+      final Map<String, dynamic> jsonMap = json.decode(jsonString);
+      final List<dynamic> data = jsonMap["data"] ?? [];
+      final Map<int, String> translations = {};
+
+      for (var verse in data) {
+        final int verseNumber = int.tryParse(verse["aya"] ?? "0") ?? 0;
+        final String translation = verse["text"] ?? "";
+
+        if (verseNumber > 0) {
+          translations[verseNumber] = translation;
+        }
+      }
+
+      emit(state.copyWith(urduTranslations: translations));
+    } catch (e) {
+      emit(state.copyWith(urduTranslations: {}));
     }
   }
 }

@@ -117,6 +117,9 @@ class MyApp extends StatelessWidget {
                       kashmiriTranslationFilePath: (ModalRoute.of(context)
                           ?.settings
                           .arguments as Map)['path'] as String,
+                      urduTranslationFilePath: (ModalRoute.of(context)
+                          ?.settings
+                          .arguments as Map)['urduPath'] as String,
                     ),
                   ),
               NamedRoutes.bookmarkScreen: (context) => MultiBlocProvider(

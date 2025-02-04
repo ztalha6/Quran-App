@@ -14,9 +14,14 @@ import 'package:resources/styles/text_styles.dart';
 class DetailSurahScreen extends StatefulWidget {
   final int id;
   final String kashmiriTranslationFilePath;
+  final String urduTranslationFilePath;
 
-  const DetailSurahScreen(
-      {super.key, required this.id, required this.kashmiriTranslationFilePath});
+  const DetailSurahScreen({
+    super.key,
+    required this.id,
+    required this.kashmiriTranslationFilePath,
+    required this.urduTranslationFilePath,
+  });
 
   @override
   State<DetailSurahScreen> createState() => _DetailSurahScreenState();
@@ -29,10 +34,15 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
 
     Future.microtask(() {
       context.read<DetailSurahBloc>().add(FetchDetailSurah(
-          id: widget.id,
-          kashmiriTranslationFilePath: widget.kashmiriTranslationFilePath));
-      context.read<DetailSurahBloc>().add(FetchKashmiriTranslation(
-          filePath: widget.kashmiriTranslationFilePath));
+            id: widget.id,
+            kashmiriTranslationFilePath: widget.kashmiriTranslationFilePath,
+            urduTranslationFilePath: widget.urduTranslationFilePath,
+          ));
+      // context.read<DetailSurahBloc>().add(FetchKashmiriTranslation(
+      //     filePath: widget.kashmiriTranslationFilePath));
+      // context
+      //     .read<DetailSurahBloc>()
+      //     .add(FetchUrduTranslation(filePath: widget.urduTranslationFilePath));
       context.read<LastReadCubit>().getLastRead();
     });
   }
@@ -63,6 +73,7 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                   } else if (status.isHasData) {
                     final surah = state.statusDetailSurah.data;
                     final translations = state.kashmiriTranslations;
+                    final urduTranslations = state.urduTranslations;
 
                     if (context.read<LastReadCubit>().state.data.isEmpty) {
                       context.read<LastReadCubit>().addLastRead(surah!);
@@ -123,6 +134,10 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                                               surah:
                                                   surah.name.transliteration.id,
                                               kashmiriTranslation: translations[
+                                                      surah.verses[index].number
+                                                          .inSurah] ??
+                                                  "",
+                                              urduTranslation: urduTranslations[
                                                       surah.verses[index].number
                                                           .inSurah] ??
                                                   "",
