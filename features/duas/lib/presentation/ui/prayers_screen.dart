@@ -6,6 +6,8 @@ import 'package:resources/styles/color.dart';
 import 'package:resources/styles/text_styles.dart';
 import 'package:quran/domain/entities/prayers_entity.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
 class PrayersScreen extends StatefulWidget {
   const PrayersScreen({super.key});
@@ -16,28 +18,68 @@ class PrayersScreen extends StatefulWidget {
 
 class _PrayersScreenState extends State<PrayersScreen> {
   List<Map<String, dynamic>> nextPrayers = [];
+  List<PrayersEntity> prayers = [];
 
   @override
   void initState() {
-    DateTime now = DateTime.now();
-    DateFormat dateFormat =
-        DateFormat('hh:mm a'); // Parse times like "5:00 AM", "1:00 PM"
+    super.initState();
+    _loadPrayerTimes();
+  }
 
-// Convert prayer times to DateTime today
-    List<Map<String, dynamic>> prayerTimes =
-        PrayersEntity.prayers.map((prayer) {
-      String cleanedTime = prayer.time
-          .trim()
-          .replaceAll(' ', ' '); // Remove any special characters
+  Future<void> _loadPrayerTimes() async {
+    DateTime now = DateTime.now();
+    int currentMonth = now.month;
+    int currentDay = now.day;
+
+    // Load the JSON file based on the current month
+    String fileName = 'assets/prayer_times/month_$currentMonth.json';
+    String jsonString = await rootBundle.loadString(fileName);
+    Map<String, dynamic> jsonData = json.decode(jsonString);
+
+    // Extract the prayer times for the current day
+    Map<String, dynamic> dailyPrayers = jsonData['$currentDay'];
+
+    // Map the extracted prayer times to PrayersEntity
+    prayers = [
+      PrayersEntity(
+        assetImage: 'assets/fajar_icon.png',
+        name: 'Fajar',
+        time: dailyPrayers['Fajar'] + " AM",
+      ),
+      PrayersEntity(
+        assetImage: 'assets/duhar_icon.png',
+        name: 'Duhar',
+        time: dailyPrayers['Duhar'] + " PM",
+      ),
+      PrayersEntity(
+        assetImage: 'assets/asr_icon.png',
+        name: 'Asr',
+        time: dailyPrayers['Asr'] + " PM",
+      ),
+      PrayersEntity(
+        assetImage: 'assets/magrib_icon.png',
+        name: 'Magrib',
+        time: dailyPrayers['Magrib'] + " PM",
+      ),
+      PrayersEntity(
+        assetImage: 'assets/isha_icon.png',
+        name: 'Isha',
+        time: dailyPrayers['Isha'] + " PM",
+      ),
+    ];
+
+    // Convert prayer times to DateTime today
+    DateFormat dateFormat = DateFormat('hh:mm a');
+    List<Map<String, dynamic>> prayerTimes = prayers.map((prayer) {
+      String cleanedTime = prayer.time.trim().replaceAll(' ', ' ');
       DateTime prayerTime = dateFormat.parse(cleanedTime);
-      // Adjust the prayer time to today's date
       prayerTime = DateTime(
           now.year, now.month, now.day, prayerTime.hour, prayerTime.minute);
       return {
         'name': prayer.name,
         'time': prayerTime,
         'timeString': dateFormat.format(prayerTime)
-      }; // Format the time as a string};
+      };
     }).toList();
 
     // Find next two prayers after current time
@@ -51,7 +93,7 @@ class _PrayersScreenState extends State<PrayersScreen> {
 
     // Get the next 2 prayers
     nextPrayers = nextPrayers.take(2).toList();
-    super.initState();
+    setState(() {});
   }
 
   @override
@@ -60,131 +102,134 @@ class _PrayersScreenState extends State<PrayersScreen> {
         builder: (context, prefSetProvider, _) {
       return Scaffold(
         body: SingleChildScrollView(
-          child: SafeArea(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 32.0, horizontal: 28.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ShowUpAnimation(
-                    child: Text(
-                      'Prayer Time',
-                      style: kHeading6.copyWith(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        color: kPurpleSecondary,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12.0),
-                  ShowUpAnimation(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+          child: nextPrayers.isEmpty || prayers.isEmpty
+              ? const CircularProgressIndicator()
+              : SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 32.0, horizontal: 28.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Today',
-                          style: kHeading6.copyWith(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700,
-                            color: prefSetProvider.isDarkTheme
-                                ? Colors.white
-                                : kBlackPurple,
-                            letterSpacing: 0.0,
+                        ShowUpAnimation(
+                          child: Text(
+                            'Prayer Time',
+                            style: kHeading6.copyWith(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: kPurpleSecondary,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12.0),
+                        ShowUpAnimation(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Today',
+                                style: kHeading6.copyWith(
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.w700,
+                                  color: prefSetProvider.isDarkTheme
+                                      ? Colors.white
+                                      : kBlackPurple,
+                                  letterSpacing: 0.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        ShowUpAnimation(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: kPurplePrimary.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 50,
+                                  offset: const Offset(
+                                      0, 18), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              children: [
+                                Image.asset('assets/prayer_time_banner.png'),
+                                Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        nextPrayers[0]['name'],
+                                        style: kHeading6.copyWith(
+                                          fontSize: 16.0,
+                                          color: prefSetProvider.isDarkTheme
+                                              ? Colors.white
+                                              : Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        nextPrayers[0]['timeString'],
+                                        style: kHeading6.copyWith(
+                                          fontSize: 32.0,
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Next Pray: ${nextPrayers[1]['name']}',
+                                        style: kHeading6.copyWith(
+                                          fontSize: 16.0,
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                        ),
+                                      ),
+                                      Text(
+                                        nextPrayers[1]['timeString'],
+                                        style: kHeading6.copyWith(
+                                          fontSize: 16.0,
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 44.0),
+                        ShowUpAnimation(
+                          child: SizedBox(
+                            height: MediaQuery.of(context).size.height / 1.8,
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: prayers.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final prayer = prayers[index];
+                                return PrayerWidget(
+                                  dua: prayer,
+                                  prefSetProvider: prefSetProvider,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 18),
-                  ShowUpAnimation(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: kPurplePrimary.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 50,
-                            offset: const Offset(
-                                0, 18), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Stack(
-                        children: [
-                          Image.asset('assets/prayer_time_banner.png'),
-                          Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  nextPrayers[0]['name'],
-                                  style: kHeading6.copyWith(
-                                    fontSize: 16.0,
-                                    color: prefSetProvider.isDarkTheme
-                                        ? Colors.white
-                                        : Colors.white,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  nextPrayers[0]['timeString'],
-                                  style: kHeading6.copyWith(
-                                    fontSize: 32.0,
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  'Next Pray: ${nextPrayers[1]['name']}',
-                                  style: kHeading6.copyWith(
-                                    fontSize: 16.0,
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                  ),
-                                ),
-                                Text(
-                                  nextPrayers[1]['timeString'],
-                                  style: kHeading6.copyWith(
-                                    fontSize: 16.0,
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 44.0),
-                  ShowUpAnimation(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.8,
-                      child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: PrayersEntity.prayers.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final prayer = PrayersEntity.prayers[index];
-                          return PrayerWidget(
-                            dua: prayer,
-                            prefSetProvider: prefSetProvider,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                ),
         ),
       );
     });
