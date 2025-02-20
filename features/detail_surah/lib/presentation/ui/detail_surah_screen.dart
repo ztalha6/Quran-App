@@ -28,6 +28,68 @@ class DetailSurahScreen extends StatefulWidget {
 }
 
 class _DetailSurahScreenState extends State<DetailSurahScreen> {
+  bool isTilawatMode = false;
+  bool showEnglishTranslation = false;
+  bool showUrduTranslation = true;
+
+  void showOptionsBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 50),
+          child: Wrap(
+            children: [
+              ListTile(
+                title: const Text(
+                  "Enable/Disable Tilawat mode",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  setState(() {
+                    isTilawatMode = !isTilawatMode;
+                    showEnglishTranslation = false;
+                    showUrduTranslation = true;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text(
+                  "Show English Translation",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  setState(() {
+                    isTilawatMode = false;
+                    showEnglishTranslation = true;
+                    showUrduTranslation = false;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text(
+                  "Show Urdu Translation",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  setState(() {
+                    isTilawatMode = false;
+                    showEnglishTranslation = false;
+                    showUrduTranslation = true;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -38,11 +100,6 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
             kashmiriTranslationFilePath: widget.kashmiriTranslationFilePath,
             urduTranslationFilePath: widget.urduTranslationFilePath,
           ));
-      // context.read<DetailSurahBloc>().add(FetchKashmiriTranslation(
-      //     filePath: widget.kashmiriTranslationFilePath));
-      // context
-      //     .read<DetailSurahBloc>()
-      //     .add(FetchUrduTranslation(filePath: widget.urduTranslationFilePath));
       context.read<LastReadCubit>().getLastRead();
     });
   }
@@ -85,25 +142,37 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                       children: [
                         ShowUpAnimation(
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              InkWell(
-                                onTap: () => Navigator.pop(context),
-                                child: const Icon(
-                                  Icons.arrow_back,
-                                  size: 24.0,
-                                  color: kGrey,
-                                ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () => Navigator.pop(context),
+                                    child: const Icon(
+                                      Icons.arrow_back,
+                                      size: 24.0,
+                                      color: kGrey,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 18.0),
+                                  Text(
+                                    surah.name.transliteration.id,
+                                    style: kHeading6.copyWith(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: prefSetProvider.isDarkTheme
+                                          ? Colors.white
+                                          : kPurpleSecondary,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 18.0),
-                              Text(
-                                surah.name.transliteration.id,
-                                style: kHeading6.copyWith(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: prefSetProvider.isDarkTheme
-                                      ? Colors.white
-                                      : kPurpleSecondary,
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.more_vert,
+                                  color: Colors.black,
                                 ),
+                                onPressed: showOptionsBottomSheet,
                               ),
                             ],
                           ),
@@ -122,28 +191,64 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                                   child: Column(
                                     children: [
                                       SizedBox(
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: surah.verses.length,
-                                          itemBuilder: (context, index) {
-                                            return VersesWidget(
-                                              verses: surah.verses[index],
-                                              prefSetProvider: prefSetProvider,
-                                              surah:
-                                                  surah.name.transliteration.id,
-                                              kashmiriTranslation: translations[
-                                                      surah.verses[index].number
-                                                          .inSurah] ??
-                                                  "",
-                                              urduTranslation: urduTranslations[
-                                                      surah.verses[index].number
-                                                          .inSurah] ??
-                                                  "",
-                                            );
-                                          },
-                                        ),
+                                        child: isTilawatMode
+                                            ? Wrap(
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                children: [
+                                                  for (int i = 0;
+                                                      i < surah.verses.length;
+                                                      i++)
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Text(
+                                                        surah.verses[i].text
+                                                            .arab,
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style:
+                                                            kHeading6.copyWith(
+                                                          fontSize: 28.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    )
+                                                ],
+                                              )
+                                            : ListView.builder(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                itemCount: surah.verses.length,
+                                                itemBuilder: (context, index) {
+                                                  return VersesWidget(
+                                                    verses: surah.verses[index],
+                                                    prefSetProvider:
+                                                        prefSetProvider,
+                                                    surah: surah.name
+                                                        .transliteration.id,
+                                                    kashmiriTranslation:
+                                                        translations[surah
+                                                                .verses[index]
+                                                                .number
+                                                                .inSurah] ??
+                                                            "",
+                                                    urduTranslation:
+                                                        urduTranslations[surah
+                                                                .verses[index]
+                                                                .number
+                                                                .inSurah] ??
+                                                            "",
+                                                    showUrduTranslation:
+                                                        showUrduTranslation,
+                                                    showEnglishTranslation:
+                                                        showEnglishTranslation,
+                                                  );
+                                                },
+                                              ),
                                       ),
                                     ],
                                   ),

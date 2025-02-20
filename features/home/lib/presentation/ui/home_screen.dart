@@ -146,26 +146,26 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 2.0),
-                                    ShowUpAnimation(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Ahlan Wa Sahlan',
-                                            style: kHeading6.copyWith(
-                                              fontSize: 24.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: prefSetProvider.isDarkTheme
-                                                  ? Colors.white
-                                                  : kBlackPurple,
-                                              letterSpacing: 0.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    // const SizedBox(height: 2.0),
+                                    // ShowUpAnimation(
+                                    //   child: Row(
+                                    //     crossAxisAlignment:
+                                    //         CrossAxisAlignment.center,
+                                    //     children: [
+                                    //       Text(
+                                    //         'Ahlan Wa Sahlan',
+                                    //         style: kHeading6.copyWith(
+                                    //           fontSize: 24.0,
+                                    //           fontWeight: FontWeight.w700,
+                                    //           color: prefSetProvider.isDarkTheme
+                                    //               ? Colors.white
+                                    //               : kBlackPurple,
+                                    //           letterSpacing: 0.0,
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                     const SizedBox(height: 22.0),
                                     const BannerLastReadWidget(),
                                     const SizedBox(height: 24.0),

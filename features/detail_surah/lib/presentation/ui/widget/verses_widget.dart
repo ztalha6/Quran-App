@@ -18,6 +18,8 @@ class VersesWidget extends StatefulWidget {
   final String kashmiriTranslation;
   final String urduTranslation;
   final AudioPlayer player = AudioPlayer();
+  final bool showUrduTranslation;
+  final bool showEnglishTranslation;
 
   VersesWidget({
     super.key,
@@ -26,6 +28,8 @@ class VersesWidget extends StatefulWidget {
     required this.surah,
     required this.kashmiriTranslation,
     required this.urduTranslation,
+    required this.showUrduTranslation,
+    required this.showEnglishTranslation,
   });
 
   @override
@@ -85,7 +89,7 @@ class _VersesWidgetState extends State<VersesWidget> {
     return Container(
       padding: const EdgeInsets.only(bottom: 18.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
             padding:
@@ -251,39 +255,40 @@ class _VersesWidgetState extends State<VersesWidget> {
             ),
           ),
           const SizedBox(height: 18.0),
-          Text(
-            widget.verses.translation.en,
-            style: kHeading6.copyWith(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w800,
-              color: widget.prefSetProvider.isDarkTheme
-                  ? kGreyLight
-                  : const Color(0xFF8789A3),
-              fontStyle: FontStyle.italic,
+          if (widget.showEnglishTranslation)
+            Text(
+              widget.verses.translation.en,
+              style: kHeading6.copyWith(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w800,
+                color: widget.prefSetProvider.isDarkTheme
+                    ? kGreyLight
+                    : const Color(0xFF8789A3),
+              ),
             ),
-          ),
-          Text(
-            widget.kashmiriTranslation,
-            style: kHeading6.copyWith(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w800,
-              color: widget.prefSetProvider.isDarkTheme
-                  ? kGreyLight
-                  : const Color(0xFF8789A3),
-              fontStyle: FontStyle.italic,
+          // Text(
+          //   widget.kashmiriTranslation,
+          //   style: kHeading6.copyWith(
+          //     fontSize: 12.0,
+          //     fontWeight: FontWeight.w800,
+          //     color: widget.prefSetProvider.isDarkTheme
+          //         ? kGreyLight
+          //         : const Color(0xFF8789A3),
+          //     fontStyle: FontStyle.italic,
+          //   ),
+          // ),
+          if (widget.showUrduTranslation)
+            Text(
+              widget.urduTranslation,
+              textAlign: TextAlign.right,
+              style: kHeading6.copyWith(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w800,
+                color: widget.prefSetProvider.isDarkTheme
+                    ? kGreyLight
+                    : const Color(0xFF8789A3),
+              ),
             ),
-          ),
-          Text(
-            widget.urduTranslation,
-            style: kHeading6.copyWith(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w800,
-              color: widget.prefSetProvider.isDarkTheme
-                  ? kGreyLight
-                  : const Color(0xFF8789A3),
-              fontStyle: FontStyle.italic,
-            ),
-          ),
         ],
       ),
     );

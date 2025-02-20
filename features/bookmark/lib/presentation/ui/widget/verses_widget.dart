@@ -302,7 +302,7 @@ class _VersesWidgetState extends State<VersesWidget> {
             ),
           ),
           Text(
-            widget.bookmark.translation,
+            widget.bookmark.surah,
             style: kHeading6.copyWith(
               fontSize: 12.0,
               fontWeight: FontWeight.w400,
