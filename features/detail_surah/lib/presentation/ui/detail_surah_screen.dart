@@ -31,6 +31,7 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
   bool isTilawatMode = false;
   bool showEnglishTranslation = false;
   bool showUrduTranslation = true;
+  bool showKashmiriTasfeer = false;
 
   void showOptionsBottomSheet() {
     showModalBottomSheet(
@@ -51,6 +52,7 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                     isTilawatMode = !isTilawatMode;
                     showEnglishTranslation = false;
                     showUrduTranslation = true;
+                    showKashmiriTasfeer = false;
                   });
                   Navigator.pop(context);
                 },
@@ -65,6 +67,7 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                     isTilawatMode = false;
                     showEnglishTranslation = true;
                     showUrduTranslation = false;
+                    showKashmiriTasfeer = false;
                   });
                   Navigator.pop(context);
                 },
@@ -79,6 +82,19 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                     isTilawatMode = false;
                     showEnglishTranslation = false;
                     showUrduTranslation = true;
+                    showKashmiriTasfeer = false;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text(
+                  "Kashmiri Tafseer",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  setState(() {
+                    showKashmiriTasfeer = !showKashmiriTasfeer;
                   });
                   Navigator.pop(context);
                 },
@@ -218,37 +234,115 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                                                     )
                                                 ],
                                               )
-                                            : ListView.builder(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    const NeverScrollableScrollPhysics(),
-                                                itemCount: surah.verses.length,
-                                                itemBuilder: (context, index) {
-                                                  return VersesWidget(
-                                                    verses: surah.verses[index],
-                                                    prefSetProvider:
-                                                        prefSetProvider,
-                                                    surah: surah.name
-                                                        .transliteration.id,
-                                                    kashmiriTranslation:
-                                                        translations[surah
-                                                                .verses[index]
-                                                                .number
-                                                                .inSurah] ??
-                                                            "",
-                                                    urduTranslation:
-                                                        urduTranslations[surah
-                                                                .verses[index]
-                                                                .number
-                                                                .inSurah] ??
-                                                            "",
-                                                    showUrduTranslation:
-                                                        showUrduTranslation,
-                                                    showEnglishTranslation:
-                                                        showEnglishTranslation,
-                                                  );
-                                                },
-                                              ),
+                                            : showKashmiriTasfeer
+                                                ? ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    itemCount: state
+                                                        .kashmiriTranslations
+                                                        .entries
+                                                        .length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 18.0),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            const SizedBox(
+                                                                height: 12.0),
+                                                            Align(
+                                                              alignment: Alignment
+                                                                  .centerRight,
+                                                              child: Text(
+                                                                state.kashmiriTranslations
+                                                                        .keys
+                                                                        .toList()[
+                                                                    index],
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .right,
+                                                                style: kHeading6
+                                                                    .copyWith(
+                                                                  fontSize:
+                                                                      28.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 18.0),
+                                                            Text(
+                                                              state
+                                                                  .kashmiriTranslations[state
+                                                                      .kashmiriTranslations
+                                                                      .keys
+                                                                      .toList()[index]]
+                                                                  .toString(),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .right,
+                                                              style: kHeading6
+                                                                  .copyWith(
+                                                                fontSize: 24.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800,
+                                                                color: const Color(
+                                                                    0xFF8789A3),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  )
+                                                : ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    itemCount:
+                                                        surah.verses.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return VersesWidget(
+                                                        verses:
+                                                            surah.verses[index],
+                                                        prefSetProvider:
+                                                            prefSetProvider,
+                                                        surah: surah.name
+                                                            .transliteration.id,
+                                                        kashmiriTranslation:
+                                                            translations[surah
+                                                                    .verses[
+                                                                        index]
+                                                                    .number
+                                                                    .inSurah] ??
+                                                                "",
+                                                        urduTranslation:
+                                                            urduTranslations[surah
+                                                                    .verses[
+                                                                        index]
+                                                                    .number
+                                                                    .inSurah] ??
+                                                                "",
+                                                        showUrduTranslation:
+                                                            showUrduTranslation,
+                                                        showEnglishTranslation:
+                                                            showEnglishTranslation,
+                                                      );
+                                                    },
+                                                  ),
                                       ),
                                     ],
                                   ),

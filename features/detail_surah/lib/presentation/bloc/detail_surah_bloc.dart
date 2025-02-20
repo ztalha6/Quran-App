@@ -53,14 +53,15 @@ class DetailSurahBloc extends Bloc<DetailSurahEvent, DetailSurahState> {
     try {
       final String jsonString = await rootBundle.loadString(event.filePath);
       final List<dynamic> jsonList = json.decode(jsonString);
-      final Map<int, String> translations = {};
+      final Map<String, String> translations = {};
 
       for (var verse in jsonList) {
         final int verseNumber = int.tryParse(verse["verse"] ?? "0") ?? 0;
+        final String verseArb = verse["arabic"] ?? "";
         final String translation = verse["translation"] ?? "";
 
         if (verseNumber > 0) {
-          translations[verseNumber] = translation;
+          translations[verseArb] = translation;
         }
       }
 
