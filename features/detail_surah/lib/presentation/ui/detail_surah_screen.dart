@@ -6,6 +6,7 @@ import 'package:dependencies/show_up_animation/show_up_animation.dart';
 import 'package:detail_surah/presentation/bloc/bloc.dart';
 import 'package:detail_surah/presentation/cubits/last_read/last_read_cubit.dart';
 import 'package:detail_surah/presentation/ui/widget/banner_verses_widget.dart';
+import 'package:detail_surah/presentation/ui/widget/kashmiri_verse_widget.dart';
 import 'package:detail_surah/presentation/ui/widget/verses_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/styles/color.dart';
@@ -208,31 +209,88 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                                     children: [
                                       SizedBox(
                                         child: isTilawatMode
-                                            ? Wrap(
-                                                textDirection:
-                                                    TextDirection.rtl,
-                                                children: [
-                                                  for (int i = 0;
-                                                      i < surah.verses.length;
-                                                      i++)
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                        surah.verses[i].text
-                                                            .arab,
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style:
-                                                            kHeading6.copyWith(
-                                                          fontSize: 28.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text.rich(
+                                                  textDirection:
+                                                      TextDirection.rtl,
+                                                  TextSpan(
+                                                    children: [
+                                                      for (int i = 0;
+                                                          i <
+                                                              surah.verses
+                                                                  .length;
+                                                          i++) ...[
+                                                        TextSpan(
+                                                          text: surah.verses[i]
+                                                                  .text.arab +
+                                                              " ",
+                                                          style: kHeading6
+                                                              .copyWith(
+                                                            fontSize: 28.0,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            height: 2.2,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )
-                                                ],
+                                                        WidgetSpan(
+                                                          alignment:
+                                                              PlaceholderAlignment
+                                                                  .middle,
+                                                          child: Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              right: 6.0,
+                                                              left: 6.0,
+                                                            ),
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        12.0,
+                                                                    vertical:
+                                                                        4.0),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  kPurpleSecondary
+                                                                      .withAlpha(
+                                                                          50),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0),
+                                                              border: Border.all(
+                                                                  color:
+                                                                      kPurplePrimary,
+                                                                  width: 1.5),
+                                                            ),
+                                                            child: Text(
+                                                              surah
+                                                                  .verses[i]
+                                                                  .number
+                                                                  .inSurah
+                                                                  .toString(),
+                                                              style: kHeading6
+                                                                  .copyWith(
+                                                                fontSize: 18.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const TextSpan(
+                                                            text:
+                                                                " "), // Add space after verse number
+                                                      ],
+                                                    ],
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               )
                                             : showKashmiriTasfeer
                                                 ? ListView.builder(
@@ -245,65 +303,17 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                                                         .length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                bottom: 18.0),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            const SizedBox(
-                                                                height: 12.0),
-                                                            Align(
-                                                              alignment: Alignment
-                                                                  .centerRight,
-                                                              child: Text(
-                                                                state.kashmiriTranslations
-                                                                        .keys
-                                                                        .toList()[
-                                                                    index],
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .right,
-                                                                style: kHeading6
-                                                                    .copyWith(
-                                                                  fontSize:
-                                                                      28.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 18.0),
-                                                            Text(
-                                                              state
-                                                                  .kashmiriTranslations[state
-                                                                      .kashmiriTranslations
-                                                                      .keys
-                                                                      .toList()[index]]
-                                                                  .toString(),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .right,
-                                                              style: kHeading6
-                                                                  .copyWith(
-                                                                fontSize: 24.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: const Color(
-                                                                    0xFF8789A3),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                      return KashmiriVerseWidget(
+                                                        arabicVerse: state
+                                                            .kashmiriTranslations
+                                                            .keys
+                                                            .toList()[index],
+                                                        kashmiriTranslation: state
+                                                            .kashmiriTranslations[state
+                                                                .kashmiriTranslations
+                                                                .keys
+                                                                .toList()[index]]
+                                                            .toString(),
                                                       );
                                                     },
                                                   )
